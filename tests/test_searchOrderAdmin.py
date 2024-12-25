@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 
+
 # Fixture to initialize the WebDriver
 @pytest.fixture
 def driver():
@@ -15,11 +16,13 @@ def driver():
     yield driver
     driver.quit()
 
+
 # Helper function for waiting for clickable elements
 def wait_for_clickable_element(driver, locator, timeout=10):
     """Wait for an element to be clickable and return it."""
     wait = WebDriverWait(driver, timeout)
     return wait.until(EC.element_to_be_clickable(locator))
+
 
 # Helper function for clicking an element
 def click_element(driver, element):
@@ -27,20 +30,21 @@ def click_element(driver, element):
     driver.execute_script("arguments[0].scrollIntoView();", element)
     element.click()
 
+
 # Test case for admin login and validation
 def test_searchOrderID(driver):
     # Navigate to the website
-    driver.get("http://localhost/Classic-Groove-main/index.php")
+    driver.get("http://localhost/Classic-Groove/index.php")
     time.sleep(2)
-    
+
     # Wait for and click the login button
     login = wait_for_clickable_element(driver, (By.XPATH, '//*[@id="header"]/div/div[2]/div[1]/div[1]/input'))
     click_element(driver, login)
     time.sleep(2)
 
     # Perform login
-    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("admin")
-    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Quan19112003@")
+    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("lahieuphong_superAdmin")
+    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Tatooboys123@")
     driver.find_element(By.XPATH, '//*[@id="login"]/div/div[1]/form/div[3]/input').click()
     time.sleep(2)
 
@@ -52,9 +56,9 @@ def test_searchOrderID(driver):
     time.sleep(2)
     driver.find_element(By.XPATH, '//*[@id="orderManager"]/div[1]/div/div[1]/input').send_keys(Keys.RETURN)
     time.sleep(2)
-    
 
-    order_elements = driver.find_elements(By.CSS_SELECTOR, '.placeholder .info .item:nth-child(2)')  # Lấy phần tử thứ 2 trong mỗi dòng
+    order_elements = driver.find_elements(By.CSS_SELECTOR,
+                                          '.placeholder .info .item:nth-child(2)')  # Lấy phần tử thứ 2 trong mỗi dòng
 
     # Kiểm tra từng ID Order
     all_contain_two = True  # Biến để theo dõi xem tất cả có chứa số 2 hay không
@@ -71,20 +75,19 @@ def test_searchOrderID(driver):
     print("All Order IDs contain the number 2.")
 
 
-
 def test_searchAccountID(driver):
     # Navigate to the website
-    driver.get("http://localhost/Classic-Groove-main/index.php")
+    driver.get("http://localhost/Classic-Groove/index.php")
     time.sleep(2)
-    
+
     # Wait for and click the login button
     login = wait_for_clickable_element(driver, (By.XPATH, '//*[@id="header"]/div/div[2]/div[1]/div[1]/input'))
     click_element(driver, login)
     time.sleep(2)
 
     # Perform login
-    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("admin")
-    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Quan19112003@")
+    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("lahieuphong_superAdmin")
+    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Tatooboys123@")
     driver.find_element(By.XPATH, '//*[@id="login"]/div/div[1]/form/div[3]/input').click()
     time.sleep(2)
 
@@ -92,41 +95,42 @@ def test_searchAccountID(driver):
     time.sleep(2)
     driver.find_element(By.XPATH, '//*[@id="orderManager"]/div[1]/div/div[1]').click()
     time.sleep(2)
-    driver.find_element(By.XPATH, '//*[@id="orderManager"]/div[1]/div/div[1]/input').send_keys("leduyquan")
+    driver.find_element(By.XPATH, '//*[@id="orderManager"]/div[1]/div/div[1]/input').send_keys("lahieuphong")
     time.sleep(2)
     driver.find_element(By.XPATH, '//*[@id="orderManager"]/div[1]/div/div[1]/input').send_keys(Keys.RETURN)
     time.sleep(2)
-    
 
-    order_elements = driver.find_elements(By.CSS_SELECTOR, '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 2 trong mỗi dòng
+    order_elements = driver.find_elements(By.CSS_SELECTOR,
+                                          '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 2 trong mỗi dòng
 
     # Kiểm tra từng ID Order
     all_contain_two = True  # Biến để theo dõi xem tất cả có chứa số 2 hay không
 
     for order in order_elements:
         order_id = order.text.strip()  # Lấy ID Order và loại bỏ khoảng trắng
-        if "leduyquan" not in order_id:  # Kiểm tra xem có chứa số "2" không
+        if "lahieuphong" not in order_id:  # Kiểm tra xem có chứa số "2" không
             all_contain_two = False  # Nếu có bất kỳ ID nào không chứa số 2, đặt biến thành False
-            print(f"Account ID {order_id} does not contain leduyquan")
+            print(f"Account ID {order_id} does not contain lahieuphong")
 
     # Assert kết quả
     assert all_contain_two, "Not all Account IDs contain leduyquan account."
 
-    print("All Account IDs contain leduyquan account.")
+    print("All Account IDs contain lahieuphong account.")
+
 
 def test_searchSpecialCharacter(driver):
     # Navigate to the website
-    driver.get("http://localhost/Classic-Groove-main/index.php")
+    driver.get("http://localhost/Classic-Groove/index.php")
     time.sleep(2)
-    
+
     # Wait for and click the login button
     login = wait_for_clickable_element(driver, (By.XPATH, '//*[@id="header"]/div/div[2]/div[1]/div[1]/input'))
     click_element(driver, login)
     time.sleep(2)
 
     # Perform login
-    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("admin")
-    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Quan19112003@")
+    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("lahieuphong_superAdmin")
+    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Tatooboys123@")
     driver.find_element(By.XPATH, '//*[@id="login"]/div/div[1]/form/div[3]/input').click()
     time.sleep(2)
 
@@ -143,7 +147,8 @@ def test_searchSpecialCharacter(driver):
     time.sleep(2)
 
     # Kiểm tra kết quả
-    order_elements = driver.find_elements(By.CSS_SELECTOR, '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 3 trong mỗi dòng
+    order_elements = driver.find_elements(By.CSS_SELECTOR,
+                                          '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 3 trong mỗi dòng
 
     # Kiểm tra xem có kết quả nào không
     if not order_elements:
@@ -159,17 +164,17 @@ def test_searchSpecialCharacter(driver):
 
 def test_searchNonExistentName(driver):
     # Navigate to the website
-    driver.get("http://localhost/Classic-Groove-main/index.php")
+    driver.get("http://localhost/Classic-Groove/index.php")
     time.sleep(2)
-    
+
     # Wait for and click the login button
     login = wait_for_clickable_element(driver, (By.XPATH, '//*[@id="header"]/div/div[2]/div[1]/div[1]/input'))
     click_element(driver, login)
     time.sleep(2)
 
     # Perform login
-    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("admin")
-    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Quan19112003@")
+    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("lahieuphong_superAdmin")
+    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Tatooboys123@")
     driver.find_element(By.XPATH, '//*[@id="login"]/div/div[1]/form/div[3]/input').click()
     time.sleep(2)
 
@@ -187,7 +192,8 @@ def test_searchNonExistentName(driver):
     time.sleep(2)
 
     # Kiểm tra kết quả
-    order_elements = driver.find_elements(By.CSS_SELECTOR, '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 3 trong mỗi dòng
+    order_elements = driver.find_elements(By.CSS_SELECTOR,
+                                          '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 3 trong mỗi dòng
 
     # Kiểm tra xem có kết quả nào không
     if not order_elements:
@@ -203,17 +209,17 @@ def test_searchNonExistentName(driver):
 
 def test_searchNonExistentNumber(driver):
     # Navigate to the website
-    driver.get("http://localhost/Classic-Groove-main/index.php")
+    driver.get("http://localhost/Classic-Groove/index.php")
     time.sleep(2)
-    
+
     # Wait for and click the login button
     login = wait_for_clickable_element(driver, (By.XPATH, '//*[@id="header"]/div/div[2]/div[1]/div[1]/input'))
     click_element(driver, login)
     time.sleep(2)
 
     # Perform login
-    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("admin")
-    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Quan19112003@")
+    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("lahieuphong_superAdmin")
+    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Tatooboys123@")
     driver.find_element(By.XPATH, '//*[@id="login"]/div/div[1]/form/div[3]/input').click()
     time.sleep(2)
 
@@ -231,7 +237,8 @@ def test_searchNonExistentNumber(driver):
     time.sleep(2)
 
     # Kiểm tra kết quả
-    order_elements = driver.find_elements(By.CSS_SELECTOR, '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 3 trong mỗi dòng
+    order_elements = driver.find_elements(By.CSS_SELECTOR,
+                                          '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 3 trong mỗi dòng
 
     # Kiểm tra xem có kết quả nào không
     if not order_elements:
@@ -247,17 +254,17 @@ def test_searchNonExistentNumber(driver):
 
 def test_searchSQLQuery(driver):
     # Navigate to the website
-    driver.get("http://localhost/Classic-Groove-main/index.php")
+    driver.get("http://localhost/Classic-Groove/index.php")
     time.sleep(2)
-    
+
     # Wait for and click the login button
     login = wait_for_clickable_element(driver, (By.XPATH, '//*[@id="header"]/div/div[2]/div[1]/div[1]/input'))
     click_element(driver, login)
     time.sleep(2)
 
     # Perform login
-    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("admin")
-    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Quan19112003@")
+    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("lahieuphong_superAdmin")
+    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Tatooboys123@")
     driver.find_element(By.XPATH, '//*[@id="login"]/div/div[1]/form/div[3]/input').click()
     time.sleep(2)
 
@@ -275,7 +282,8 @@ def test_searchSQLQuery(driver):
     time.sleep(2)
 
     # Kiểm tra kết quả
-    order_elements = driver.find_elements(By.CSS_SELECTOR, '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 3 trong mỗi dòng
+    order_elements = driver.find_elements(By.CSS_SELECTOR,
+                                          '.placeholder .info .item:nth-child(3)')  # Lấy phần tử thứ 3 trong mỗi dòng
 
     # Kiểm tra xem có kết quả nào không
     if not order_elements:
@@ -291,17 +299,17 @@ def test_searchSQLQuery(driver):
 
 def test_searchEmptyInput(driver):
     # Navigate to the website
-    driver.get("http://localhost/Classic-Groove-main/index.php")
+    driver.get("http://localhost/Classic-Groove/index.php")
     time.sleep(2)
-    
+
     # Wait for and click the login button
     login = wait_for_clickable_element(driver, (By.XPATH, '//*[@id="header"]/div/div[2]/div[1]/div[1]/input'))
     click_element(driver, login)
     time.sleep(2)
 
     # Perform login
-    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("admin")
-    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Quan19112003@")
+    driver.find_element(By.XPATH, '//*[@id="username-field"]').send_keys("lahieuphong_superAdmin")
+    driver.find_element(By.XPATH, '//*[@id="password-field"]').send_keys("Tatooboys123@")
     driver.find_element(By.XPATH, '//*[@id="login"]/div/div[1]/form/div[3]/input').click()
     time.sleep(2)
 
@@ -320,7 +328,8 @@ def test_searchEmptyInput(driver):
     # Kiểm tra phản hồi của trang web
     # Giả sử rằng nếu không có kết quả, một thông báo sẽ được hiển thị
     # Bạn có thể thay đổi selector này để phù hợp với thông báo của trang web của bạn
-    error_message_elements = driver.find_elements(By.CSS_SELECTOR, '.error-message')  # Thay đổi selector cho thông báo lỗi nếu cần
+    error_message_elements = driver.find_elements(By.CSS_SELECTOR,
+                                                  '.error-message')  # Thay đổi selector cho thông báo lỗi nếu cần
     order_elements = driver.find_elements(By.CSS_SELECTOR, '.placeholder .info .item')  # Lấy tất cả các phần tử kết quả
 
     # Kiểm tra xem có thông báo lỗi không và không có kết quả nào
